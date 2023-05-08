@@ -112,8 +112,8 @@ public class MilkyWayStargateBlock extends AbstractStargateBlock
 				symbols = "Error";
 		}
 		
-        tooltipComponents.add(Component.literal("PoO: " + pointOfOrigin).withStyle(ChatFormatting.DARK_PURPLE));
-        tooltipComponents.add(Component.literal("Symbols: " + symbols).withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltipComponents.add(Component.literal("PoO: ").append(Component.translatable(pointOfOrigin)).withStyle(ChatFormatting.DARK_PURPLE));
+        tooltipComponents.add(Component.literal("Symbols: ").append(Component.translatable(symbols)).withStyle(ChatFormatting.LIGHT_PURPLE));
         super.appendHoverText(stack, getter, tooltipComponents, isAdvanced);
     }
 }

@@ -36,7 +36,6 @@ public class ConfigScreenClient extends Screen
 				Component.translatable("gui.sgjourney.false")).withInitialValue(StargateJourneyConfig.disable_smooth_animations.get()).create(this.width / 2 - 100, l + 24, 200, 20, Component.translatable("gui.sgjourney.disable_smooth_animations"), (cycleButton, isTrue)->
 				{
 					StargateJourneyConfig.disable_smooth_animations.set(isTrue);
-					StargateJourneyConfig.disable_smooth_animations.save();
 				}));
 
 		this.addRenderableWidget(Button.builder(CommonComponents.GUI_BACK, 

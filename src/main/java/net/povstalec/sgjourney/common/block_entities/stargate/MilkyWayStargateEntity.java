@@ -269,8 +269,8 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 	public boolean isCurrentSymbol(int desiredSymbol)
 	{
 		double position = this.rotation / angle;
-		double lowerBound = (double) (desiredSymbol - 0.1);
-		double upperBound = (double) (desiredSymbol + 0.1);
+		double lowerBound = (double) (desiredSymbol - 0.12);
+		double upperBound = (double) (desiredSymbol + 0.12);
 		
 		if(position > lowerBound && position < upperBound)
 			return true;

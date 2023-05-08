@@ -53,6 +53,10 @@
 	"item.sgjourney.naquadah": "Weapons Grade Naquadah",
 	"item.sgjourney.liquid_naquadah_bucket": "Liquid Naquadah Bucket",
 	"item.sgjourney.liquid_naquadah_bottle": "Liquid Naquadah Bottle",
+	
+	"item.sgjourney.naquadah_rod": "Naquadah Rod",
+	"item.sgjourney.reaction_chamber": "Reaction Chamber",
+	"item.sgjourney.plasma_converter": "Plasma Converter",
 
 	"item.sgjourney.control_crystal": "Control Crystal",
 	"item.sgjourney.large_control_crystal": "Large Control Crystal",

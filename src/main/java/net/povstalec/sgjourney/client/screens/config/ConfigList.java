@@ -71,6 +71,12 @@ public class ConfigList extends ObjectSelectionList<ConfigList.ConfigEntry>
 	    	this.resetToDefault = Button.builder(reset, (button) -> reset()).bounds(0, 0, 50, 20).build();
 	    }
 	    
+	    @Override
+	    public boolean mouseClicked(double mouseX, double mouseY, int key)
+	    {
+			return super.mouseClicked(mouseX, mouseY, key);
+	    }
+	    
 	    protected abstract void reset();
 
 		@Override

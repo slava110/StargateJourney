@@ -40,7 +40,7 @@ public class FirePitBlock extends Block
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
 	{
-		if(!level.isClientSide)
+		if(!level.isClientSide())
 		{
 			if(state.getValue(LIT) == true && player.getItemInHand(hand).isEmpty())
 			{

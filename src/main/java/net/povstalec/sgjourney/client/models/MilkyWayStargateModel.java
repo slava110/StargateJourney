@@ -172,18 +172,35 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 			this.getChevronLight(chevron).y = 2;
 			this.getOuterChevron(chevron).y = -2;
 		}
-		else if((stargate.getCurrentSymbol() == 0 || stargate.chevronsRendered() >= 8) && stargate.isChevronRaised || stargate.isConnected())
+		else if((stargate.getCurrentSymbol() == 0 || stargate.chevronsRendered() >= 8))
 		{
-			//TODO Change this to not use for
-			for(int i = 1; i < chevron; i++)
+			if(stargate.isChevronRaised)
 			{
-				this.getOuterChevron(i).y = -2;
+				for(int i = 1; i < chevron; i++)
+				{
+					this.getChevronLight(i).y = 2;
+					this.getOuterChevron(i).y = -2;
+				}
+			}
+			else if(!stargate.isChevronRaised && stargate.isConnected())
+			{
+				for(int i = 1; i < chevron; i++)
+				{
+					this.getOuterChevron(i).y = -2;
+				}
+				for(int i = chevron; i < 9; i++)
+				{
+					this.getOuterChevron(i).y = 0;
+				}
+				for(int i = 1; i < 9; i++)
+				{
+					this.getChevronLight(i).y = 0;
+				}
 			}
 		}
 			
 		else
 		{
-			//TODO Change this to not use for
 			for(int i = 1; i < 9; i++)
 			{
 				this.getChevronLight(i).y = 0;

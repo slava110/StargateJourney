@@ -44,11 +44,9 @@ public class EventInit
 	@SubscribeEvent
 	public static void onTick(TickEvent.ServerTickEvent event)
 	{
-		if(event.phase.equals(TickEvent.Phase.START))
-		{
-			MinecraftServer server = event.getServer();
+		MinecraftServer server = event.getServer();
+		if(event.phase.equals(TickEvent.Phase.START) && server != null)
 			StargateNetwork.get(server).handleConnections();
-		}
 	}
 	
 	@SubscribeEvent
