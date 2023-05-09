@@ -446,15 +446,19 @@ public class StargateNetwork extends SavedData
 	//============================================================================================
 	//**************************************Stargate Network**************************************
 	//============================================================================================
-	
-	public static StargateNetwork create()
+	public StargateNetwork(MinecraftServer server)
 	{
-		return new StargateNetwork();
+		this.server = server;
+	}
+	
+	public static StargateNetwork create(MinecraftServer server)
+	{
+		return new StargateNetwork(server);
 	}
 	
 	public static StargateNetwork load(MinecraftServer server, CompoundTag tag)
 	{
-		StargateNetwork data = create();
+		StargateNetwork data = create(server);
 		
 		data.server = server;
 		data.stargateNetwork = tag.copy();
@@ -486,6 +490,6 @@ public class StargateNetwork extends SavedData
     {
     	DimensionDataStorage storage = server.overworld().getDataStorage();
         
-        return storage.computeIfAbsent((tag) -> load(server, tag), () -> create(), FILE_NAME);
+        return storage.computeIfAbsent((tag) -> load(server, tag), () -> create(server), FILE_NAME);
     }
 }
