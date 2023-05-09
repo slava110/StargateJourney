@@ -40,6 +40,7 @@ import net.povstalec.sgjourney.common.stargate.Addressing;
 import net.povstalec.sgjourney.common.stargate.Dialing;
 import net.povstalec.sgjourney.common.stargate.PointOfOrigin;
 import net.povstalec.sgjourney.common.stargate.Stargate;
+import net.povstalec.sgjourney.common.stargate.Stargate.Feedback;
 import net.povstalec.sgjourney.common.stargate.Symbols;
 import net.povstalec.sgjourney.common.stargate.Wormhole;
 
@@ -49,6 +50,7 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 	private static Stargate.Gen generation;
 	
 	// Used during gameplay
+	private Stargate.Feedback recentFeedback = Stargate.Feedback.NONE;
 	private int animationTick = 0;
 	private boolean isPrimaryChevronEngaged = false;
 	private boolean dialingOut = false;
@@ -155,12 +157,12 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 			return Stargate.Feedback.NONE;
 		
 		if(Addressing.addressContainsSymbol(getAddress(), symbol))
-			return Stargate.Feedback.SYMBOL_ENCODED;
+			return setRecentFeedback(Stargate.Feedback.SYMBOL_IN_ADDRESS);
 		
 		if(symbol == 0)
-			return lockPrimaryChevron();
+			return setRecentFeedback(lockPrimaryChevron());
 		else
-			return encodeChevron(symbol);
+			return setRecentFeedback(encodeChevron(symbol));
 	}
 	
 	protected Stargate.Feedback encodeChevron(int symbol)
@@ -187,7 +189,7 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 			{
 				setPrimaryChevronEndaged(true);
 				engageChevron();
-				return engageStargate();
+				return setRecentFeedback(engageStargate());
 			}
 			else
 				return resetStargate(Stargate.Feedback.SELF_OBSTRUCTED);
@@ -247,7 +249,7 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 		
 		setChanged();
 		StargateJourney.LOGGER.info("Reset Stargate at " + this.getBlockPos().getX() + " " + this.getBlockPos().getY() + " " + this.getBlockPos().getZ());
-		return feedback;
+		return setRecentFeedback(feedback);
 	}
 	
 	public Stargate.Feedback disconnectStargate(Stargate.Feedback feedback)
@@ -282,6 +284,17 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 	//============================================================================================
 	//******************************************Symbols*******************************************
 	//============================================================================================
+	
+	public Stargate.Feedback setRecentFeedback(Stargate.Feedback feedback)
+	{
+		this.recentFeedback = feedback;
+		return getRecentFeedback();
+	}
+	
+	public Stargate.Feedback getRecentFeedback()
+	{
+		return this.recentFeedback;
+	}
 	
 	/**
 	 * Sets the Stargate's point of origin based on the dimension

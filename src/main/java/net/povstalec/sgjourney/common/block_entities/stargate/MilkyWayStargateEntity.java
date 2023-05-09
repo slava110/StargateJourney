@@ -179,22 +179,22 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 			this.isChevronRaised = true;
 			return Stargate.Feedback.CHEVRON_RAISED;
 		}
-		return Stargate.Feedback.CHEVRON_ALREADY_RAISED;
+		return setRecentFeedback(Stargate.Feedback.CHEVRON_ALREADY_RAISED);
 	}
 	
 	public Stargate.Feedback lowerChevron()
 	{
 		if(this.isChevronRaised)
 		{
-			engageSymbol(getCurrentSymbol());
+			;
 			this.isChevronRaised = false;
-			return Stargate.Feedback.CHEVRON_LOWERED;
+			return setRecentFeedback(engageSymbol(getCurrentSymbol()));
 		}
 		
 		if(!this.level.isClientSide())
 			synchronizeWithClient(this.level);
 		
-		return Stargate.Feedback.CHEVRON_ALREADY_LOWERED;
+		return setRecentFeedback(Stargate.Feedback.CHEVRON_ALREADY_LOWERED);
 	}
 	
 	public int getCurrentSymbol()
