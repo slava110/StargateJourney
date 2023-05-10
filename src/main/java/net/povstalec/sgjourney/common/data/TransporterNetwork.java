@@ -24,7 +24,7 @@ import net.povstalec.sgjourney.common.stargate.Dialing;
  * @author Povstalec
  *
  */
-public class RingsNetwork extends SavedData
+public class TransporterNetwork extends SavedData
 {
 	private static final String FILE_NAME = "sgjourney-rings_network";
 
@@ -290,14 +290,14 @@ public class RingsNetwork extends SavedData
 	
 //================================================================================================
 
-	public static RingsNetwork create()
+	public static TransporterNetwork create()
 	{
-		return new RingsNetwork();
+		return new TransporterNetwork();
 	}
 	
-	public static RingsNetwork load(CompoundTag tag)
+	public static TransporterNetwork load(CompoundTag tag)
 	{
-		RingsNetwork data = create();
+		TransporterNetwork data = create();
 
 		data.ringsNetwork = tag.copy();
 		
@@ -312,19 +312,19 @@ public class RingsNetwork extends SavedData
 	}
 	
 	@Nonnull
-	public static RingsNetwork get(Level level)
+	public static TransporterNetwork get(Level level)
 	{
 		if(level.isClientSide)
 			throw new RuntimeException("Don't access this client-side!");
 		
-		return RingsNetwork.get(level.getServer());
+		return TransporterNetwork.get(level.getServer());
 	}
 
     @Nonnull
-	public static RingsNetwork get(MinecraftServer server)
+	public static TransporterNetwork get(MinecraftServer server)
     {
     	DimensionDataStorage storage = server.overworld().getDataStorage();
         
-        return storage.computeIfAbsent(RingsNetwork::load, RingsNetwork::create, FILE_NAME);
+        return storage.computeIfAbsent(TransporterNetwork::load, TransporterNetwork::create, FILE_NAME);
     }
 }
