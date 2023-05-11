@@ -4,14 +4,32 @@ public abstract class Faction
 {
 	// TODO
 	// Faction Name
+	protected String factionName;
 	// Faction Leader
+	protected FactionLeader leader;
 	// Faction Territory
 	// Faction Strength
 	
+	// Player relations
+	
+	
 	public Faction(String factionName)
 	{
-		
+		this.factionName = factionName;
 	}
+	
+	//============================================================================================
+	//************************************Getters and setters*************************************
+	//============================================================================================
+	
+	public String getName()
+	{
+		return this.factionName;
+	}
+	
+	//============================================================================================
+	//*******************************************Logic********************************************
+	//============================================================================================
 	
 	public abstract void onLeaderDeath();
 	
