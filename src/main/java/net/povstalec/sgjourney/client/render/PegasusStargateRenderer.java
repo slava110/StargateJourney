@@ -22,9 +22,9 @@ import net.povstalec.sgjourney.client.models.PegasusStargateModel;
 @OnlyIn(Dist.CLIENT)
 public class PegasusStargateRenderer extends AbstractStargateRenderer implements BlockEntityRenderer<PegasusStargateEntity>
 {
-	protected static final int r = ClientStargateConfig.pegasus_r.get();
-	protected static final int g = ClientStargateConfig.pegasus_g.get();
-	protected static final int b = ClientStargateConfig.pegasus_b.get();
+	protected static final int r = ClientStargateConfig.pegasus_rgba.getRed();
+	protected static final int g = ClientStargateConfig.pegasus_rgba.getGreen();
+	protected static final int b = ClientStargateConfig.pegasus_rgba.getBlue();
 	
 	protected final WormholeModel wormholeModel;
 	protected final PegasusStargateModel stargateModel;

@@ -22,9 +22,9 @@ import net.povstalec.sgjourney.common.misc.Orientation;
 @OnlyIn(Dist.CLIENT)
 public class UniverseStargateRenderer extends AbstractStargateRenderer implements BlockEntityRenderer<UniverseStargateEntity>
 {
-	protected static final int r = ClientStargateConfig.universe_r.get();
-	protected static final int g = ClientStargateConfig.universe_g.get();
-	protected static final int b = ClientStargateConfig.universe_b.get();
+	protected static final int r = ClientStargateConfig.universe_rgba.getRed();
+	protected static final int g = ClientStargateConfig.universe_rgba.getGreen();
+	protected static final int b = ClientStargateConfig.universe_rgba.getBlue();
 	
 	protected final WormholeModel wormholeModel;
 	protected final UniverseStargateModel stargateModel;

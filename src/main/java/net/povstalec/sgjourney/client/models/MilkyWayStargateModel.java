@@ -19,11 +19,11 @@ import net.povstalec.sgjourney.common.config.ClientStargateConfig;
 
 public class MilkyWayStargateModel extends AbstractStargateModel
 {
-	private static final String CHEVRON = ClientStargateConfig.milky_way_stargate_back_lights_up.get() ? "milky_way_chevron" : "milky_way_chevron_front";
+	//private static final String CHEVRON = ClientStargateConfig.milky_way_stargate_back_lights_up.get() ? "milky_way_chevron" : "milky_way_chevron_front";
 	private static final ResourceLocation RING_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/milky_way_outer_ring.png");
 	private static final ResourceLocation SYMBOL_RING_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/milky_way_inner_ring.png");
-	private static final ResourceLocation CHEVRON_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/" + CHEVRON + ".png");
-	private static final ResourceLocation ENGAGED_CHEVRON_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/" + CHEVRON + "_lit.png");
+	//private static final ResourceLocation CHEVRON_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/" + CHEVRON + ".png");
+	//private static final ResourceLocation ENGAGED_CHEVRON_TEXTURE = new ResourceLocation(StargateJourney.MODID, "textures/entity/stargate/milky_way/" + CHEVRON + "_lit.png");
 	
 	private final ModelPart ring;
 	private final ModelPart symbolRing;
@@ -36,6 +36,7 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 	
 	public MilkyWayStargateModel(ModelPart ring, ModelPart symbolRing, ModelPart dividers, ModelPart chevrons)
 	{
+		super("milky_way");
 		this.ring = ring;
 		this.symbolRing = symbolRing;
 		this.dividers = dividers;
@@ -152,12 +153,12 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 	protected void renderChevron(MilkyWayStargateEntity stargate, PoseStack stack, MultiBufferSource source, 
 			int combinedLight, int combinedOverlay, int chevronNumber)
 	{
-		VertexConsumer chevronTexture = source.getBuffer(RenderType.entitySolid(CHEVRON_TEXTURE));
+		VertexConsumer chevronTexture = source.getBuffer(RenderType.entitySolid(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), false)));
 		this.getChevron(chevronNumber).render(stack, chevronTexture, combinedLight, combinedOverlay);
 		
 		if(stargate.chevronsRendered() >= chevronNumber)
 		{
-			VertexConsumer engagedChevronTexture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(ENGAGED_CHEVRON_TEXTURE));
+			VertexConsumer engagedChevronTexture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), true)));
 			this.getChevron(chevronNumber).render(stack, engagedChevronTexture, 255, combinedOverlay);
 		}
 	}
@@ -212,12 +213,12 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 	protected void renderMoviePrimaryChevron(MilkyWayStargateEntity stargate, PoseStack stack, MultiBufferSource source, 
 			int combinedLight, int combinedOverlay)
 	{
-		VertexConsumer chevron_texture = source.getBuffer(RenderType.entitySolid(CHEVRON_TEXTURE));
+		VertexConsumer chevron_texture = source.getBuffer(RenderType.entitySolid(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), false)));
 		this.getMovieChevron().render(stack, chevron_texture, combinedLight, combinedOverlay);
 		
 		if(!stargate.isChevronRaised && stargate.isConnected())
 		{
-			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(ENGAGED_CHEVRON_TEXTURE));
+			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), true)));
 			this.getMovieChevron().render(stack, engaged_chevron_texture, 255, combinedOverlay);
 		}
 	}
@@ -237,12 +238,12 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 			this.getOuterChevron(0).y = 0;
 		}
 		
-		VertexConsumer chevron_texture = source.getBuffer(RenderType.entitySolid(CHEVRON_TEXTURE));
+		VertexConsumer chevron_texture = source.getBuffer(RenderType.entitySolid(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), false)));
 		this.getChevron(0).render(stack, chevron_texture, combinedLight, combinedOverlay);
 		
 		if(stargate.isConnected() || stargate.isChevronRaised)
 		{
-			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(ENGAGED_CHEVRON_TEXTURE));
+			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(getChevronTexture(ClientStargateConfig.milky_way_stargate_back_lights_up.get(), true)));
 			this.getChevron(0).render(stack, engaged_chevron_texture, 255, combinedOverlay);
 		}
 	}

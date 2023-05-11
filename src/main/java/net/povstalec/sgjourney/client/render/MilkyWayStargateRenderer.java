@@ -22,9 +22,9 @@ import net.povstalec.sgjourney.client.models.MilkyWayStargateModel;
 @OnlyIn(Dist.CLIENT)
 public class MilkyWayStargateRenderer extends AbstractStargateRenderer implements BlockEntityRenderer<MilkyWayStargateEntity>
 {
-	protected static final int r = ClientStargateConfig.milky_way_r.get();
-	protected static final int g = ClientStargateConfig.milky_way_g.get();
-	protected static final int b = ClientStargateConfig.milky_way_b.get();
+	protected static final int r = ClientStargateConfig.milky_way_rgba.getRed();
+	protected static final int g = ClientStargateConfig.milky_way_rgba.getGreen();
+	protected static final int b = ClientStargateConfig.milky_way_rgba.getBlue();
 	
 	protected final WormholeModel wormholeModel;
 	protected final MilkyWayStargateModel stargateModel;

@@ -174,8 +174,31 @@ public abstract class SGJourneyConfigValue
 		}
 	}
 	
-	public static class EnumValue
+	public static class EnumValue<T extends Enum<T>>
 	{
+		public ForgeConfigSpec.EnumValue<T> enum_value;
 		
+		public EnumValue(ForgeConfigSpec.Builder builder, String path, T defaultValue, String comment)
+		{
+			this.enum_value = builder
+					.comment(comment)
+					.defineEnum(path, defaultValue);
+		}
+		
+		public void set(T value)
+		{
+			enum_value.set(value);
+			enum_value.save();
+		}
+		
+		public T get()
+		{
+			return enum_value.get();
+		}
+		
+		public T getDefault()
+		{
+			return enum_value.getDefault();
+		}
 	}
 }

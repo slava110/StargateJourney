@@ -62,7 +62,8 @@ public class StargateJourneyConfig
 	{
 		server.comment("Stargate Journey General Config");
 		
-		disable_energy_use =  new SGJourneyConfigValue.BooleanValue(server, "server.disable_energy_requirements", true, 
+		disable_energy_use = new SGJourneyConfigValue.BooleanValue(server, "server.disable_energy_requirements", 
+				true, 
 				"Disable energy requirements for blocks added by Stargate Journey");
 	}
 	
@@ -70,7 +71,8 @@ public class StargateJourneyConfig
 	{
 		client.comment("Stargate Journey Client Config");
 		
-		disable_smooth_animations =  new SGJourneyConfigValue.BooleanValue(client, "client.disable_smooth_animations", false, 
+		disable_smooth_animations = new SGJourneyConfigValue.BooleanValue(client, "client.disable_smooth_animations", 
+				false, 
 				"Disables smooth animations of Stargate Journey Block Entities");
 	}
 }

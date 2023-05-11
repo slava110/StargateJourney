@@ -232,5 +232,7 @@
 	"gui.sgjourney.config_stargate": "Stargate",
 	
 	"gui.sgjourney.disable_smooth_animations": "Disable Smooth Animations",
-	"gui.sgjourney.use_movie_stargate_model": "Use Movie Stargate Model"
+	"gui.sgjourney.use_movie_stargate_model": "Use Movie Stargate Model",
+	"gui.sgjourney.milky_way_stargate_back_lights_up": "Milky Way Stargate Back",
+	"gui.sgjourney.pegasus_stargate_back_lights_up": "Pegasus Stargate Back"
 }
