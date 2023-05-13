@@ -1,8 +1,8 @@
 {
-	"name": "solar_system.ad_astra.glacio",
+	"name": "solar_system.sgjourney.proxima_centauri",
 	"symbols": "sgjourney:milky_way",
 	"extragalactic_address": [1, 36, 28, 4, 6, 26, 22],
-	"point_of_origin": "sgjourney:gamekeeper",
+	"point_of_origin": "sgjourney:centauri",
 	"dimensions":
 	[
 		"ad_astra:glacio",

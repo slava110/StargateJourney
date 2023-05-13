@@ -32,7 +32,7 @@ public class ConfigScreen extends Screen
 				(button) -> this.minecraft.setScreen(new ConfigScreenClient(this))).bounds(this.width / 2 - 100, l, 200, 20).build());
 		
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.sgjourney.common"),
-				(button) -> this.minecraft.setScreen(new ConfigScreenCommon(this))).bounds(this.width / 2 - 100, l + 24, 200, 20).build());
+				(button) -> this.minecraft.setScreen(new ConfigScreenCommon(this))).bounds(this.width / 2 - 100, l + 24, 200, 20).build()).active = false;
 
 		this.addRenderableWidget(Button.builder(CommonComponents.GUI_BACK, 
 				(button) -> this.minecraft.setScreen(this.parentScreen))

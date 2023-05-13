@@ -192,7 +192,7 @@ public class PegasusStargateModel extends AbstractStargateModel
 		
 		if(stargate.isConnected())
 		{
-			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(getChevronTexture(ClientStargateConfig.pegasus_stargate_back_lights_up.get(), false)));
+			VertexConsumer engaged_chevron_texture = source.getBuffer(SGJourneyRenderTypes.stargateChevron(getChevronTexture(ClientStargateConfig.pegasus_stargate_back_lights_up.get(), true)));
 		    this.getChevron(0).render(stack, engaged_chevron_texture, 255, combinedOverlay);
 		}
 	}

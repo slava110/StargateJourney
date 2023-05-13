@@ -6,17 +6,24 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -28,6 +35,7 @@ import net.povstalec.sgjourney.common.capabilities.AncientGeneProvider;
 import net.povstalec.sgjourney.common.capabilities.BloodstreamNaquadah;
 import net.povstalec.sgjourney.common.capabilities.BloodstreamNaquadahProvider;
 import net.povstalec.sgjourney.common.data.StargateNetwork;
+import net.povstalec.sgjourney.common.items.armor.PersonalShieldItem;
 import net.povstalec.sgjourney.common.misc.TreasureMapForEmeraldsTrade;
 
 @Mod.EventBusSubscriber(modid = StargateJourney.MODID)
@@ -58,6 +66,63 @@ public class EventInit
 			AncientGene.addAncient(player);
 		else
 			AncientGene.inheritGene(player);
+	}
+	
+	@SubscribeEvent
+	public static void onLivingHurt(LivingAttackEvent event)
+	{
+		Entity entity = event.getEntity();
+		Entity attacker = event.getSource().getDirectEntity();
+		float damage = event.getAmount();
+		
+		event.setCanceled(onAttackOrHurt(entity, attacker, damage));
+	}
+	
+	@SubscribeEvent
+	public static void onLivingHurt(LivingHurtEvent event)
+	{
+		Entity entity = event.getEntity();
+		Entity attacker = event.getSource().getDirectEntity();
+		float damage = event.getAmount();
+		
+		event.setCanceled(onAttackOrHurt(entity, attacker, damage));
+	}
+	
+	private static boolean onAttackOrHurt(Entity entity, Entity attacker, float damage)
+	{
+		if(entity instanceof Player player)
+		{
+			ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+			if(stack.is(ItemInit.PERSONAL_SHIELD_EMITTER.get()) && PersonalShieldItem.getEnergy(stack) > 0)
+			{
+				int energyDepleted = (int) damage * 500;
+
+				PersonalShieldItem.depleteEnergy(stack, energyDepleted);
+				if(attacker instanceof LivingEntity livingAttacker)
+					livingAttacker.knockback(0.5D, player.getX() - attacker.getX(), player.getZ() - attacker.getZ());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@SubscribeEvent
+	public static void onProjectileHit(ProjectileImpactEvent event)
+	{
+		if(event.getRayTraceResult() instanceof EntityHitResult hitResult && hitResult.getEntity() instanceof Player player)
+		{
+			ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+			if(stack.is(ItemInit.PERSONAL_SHIELD_EMITTER.get()) && PersonalShieldItem.getEnergy(stack) > 0)
+			{
+				Projectile projectile = event.getProjectile();
+				
+				int energyDepleted = (int) projectile.getDeltaMovement().length() * 500;
+				
+				PersonalShieldItem.depleteEnergy(stack, energyDepleted);
+				projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.2));
+				event.setCanceled(true);
+			}
+		}
 	}
 	
 	@SubscribeEvent

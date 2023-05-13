@@ -5,12 +5,12 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
 import net.povstalec.sgjourney.common.init.SoundInit;
 
-public class PegasusStargateRingSound extends AbstractTickableSoundInstance
+public class UniverseStargateRingSound extends AbstractTickableSoundInstance
 {
-	private static final float VOLUME_MAX = 0.1F;
-	public PegasusStargateRingSound()
+	private static final float VOLUME_MAX = 1.0F;
+	public UniverseStargateRingSound()
 	{
-		super(SoundInit.PEGASUS_RING_SPIN.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
+		super(SoundInit.UNIVERSE_RING_SPIN.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 		this.volume = VOLUME_MAX;
 	}
 	

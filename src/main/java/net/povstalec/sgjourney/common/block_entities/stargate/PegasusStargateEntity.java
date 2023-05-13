@@ -2,6 +2,7 @@ package net.povstalec.sgjourney.common.block_entities.stargate;
 
 import org.jetbrains.annotations.NotNull;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -13,6 +14,7 @@ import net.povstalec.sgjourney.common.init.PacketHandlerInit;
 import net.povstalec.sgjourney.common.init.SoundInit;
 import net.povstalec.sgjourney.common.misc.ArrayHelper;
 import net.povstalec.sgjourney.common.packets.ClientboundPegasusStargateUpdatePacket;
+import net.povstalec.sgjourney.common.sounds.PegasusStargateRingSound;
 import net.povstalec.sgjourney.common.stargate.Addressing;
 import net.povstalec.sgjourney.common.stargate.Stargate;
 
@@ -22,7 +24,7 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 	public int[] addressBuffer = new int[0];
 	public int symbolBuffer = 0;
 	private boolean passedOver = false;
-	public int waitTick = 0;
+	private PegasusStargateRingSound spinSound;
 	
 	public PegasusStargateEntity(BlockPos pos, BlockState state) 
 	{
@@ -79,8 +81,24 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 		if(Addressing.addressContainsSymbol(addressBuffer, symbol))
 			return Stargate.Feedback.SYMBOL_ENCODED;
 		
+		if(addressBuffer.length == getAddress().length)
+		{
+			if(spinSound != null)
+				spinSound.stopSound();
+			spinSound = new PegasusStargateRingSound();
+			Minecraft.getInstance().getSoundManager().play(spinSound);
+		}
+		
 		addressBuffer = ArrayHelper.growIntArray(addressBuffer, symbol);
 		return Stargate.Feedback.SYMBOL_ENCODED;
+	}
+	
+	@Override
+	protected Stargate.Feedback lockPrimaryChevron()
+	{
+		if(spinSound != null)
+			spinSound.stopSound();
+		return super.lockPrimaryChevron();
 	}
 	
 	@Override
@@ -88,33 +106,26 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 	{
 		symbolBuffer++;
 		passedOver = false;
-		waitTick = 0;
-		return super.encodeChevron(symbol);
+		
+		if(spinSound != null)
+			spinSound.stopSound();
+		
+		Stargate.Feedback feedback = super.encodeChevron(symbol);
+		
+		if(addressBuffer.length > getAddress().length)
+		{
+			spinSound = new PegasusStargateRingSound();
+			Minecraft.getInstance().getSoundManager().play(spinSound);
+		}
+		
+		return feedback;
 	}
 	
 	public int getChevronPosition(int chevron)
 	{
-		switch(chevron)
-		{
-		case 1:
-			return 4;
-		case 2:
-			return 8;
-		case 3:
-			return 12;
-		case 4:
-			return 24;
-		case 5:
-			return 28;
-		case 6:
-			return 32;
-		case 7:
-			return 16;
-		case 8:
-			return 20;
-		default:
+		if(chevron < 1 || chevron > 8)
 			return 0;
-		}
+		return new int[] {4, 8, 12, 24, 28, 32, 16, 20}[chevron - 1];
 	}
 	
 	private void animateSpin()
@@ -142,9 +153,6 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 			else
 				symbolWork();
 		}
-		
-		/*if(animationTick == 1)
-			Minecraft.getInstance().getSoundManager().play(new PegasusStargateRingSound(this, symbolBuffer));*/
 	}
 	
 	public static void tick(Level level, BlockPos pos, BlockState state, PegasusStargateEntity stargate)
@@ -160,9 +168,6 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 	
 	private void symbolWork()
 	{
-		/*if(!canSpin())
-			return;*/
-		
 		if(symbolBuffer % 2 == 0)
 			currentSymbol--;
 		else
@@ -172,8 +177,6 @@ public class PegasusStargateEntity extends AbstractStargateEntity
 			currentSymbol = 0;
 		else if(currentSymbol < 0)
 			currentSymbol = 35;
-
-		waitTick++;
 	}
 	
 	@Override

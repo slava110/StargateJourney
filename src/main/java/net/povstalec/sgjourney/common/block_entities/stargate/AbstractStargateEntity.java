@@ -40,7 +40,6 @@ import net.povstalec.sgjourney.common.stargate.Addressing;
 import net.povstalec.sgjourney.common.stargate.Dialing;
 import net.povstalec.sgjourney.common.stargate.PointOfOrigin;
 import net.povstalec.sgjourney.common.stargate.Stargate;
-import net.povstalec.sgjourney.common.stargate.Stargate.Feedback;
 import net.povstalec.sgjourney.common.stargate.Symbols;
 import net.povstalec.sgjourney.common.stargate.Wormhole;
 
@@ -204,7 +203,7 @@ public abstract class AbstractStargateEntity extends SGJourneyBlockEntity
 		
 	}
 	
-	private void engageChevron()
+	protected void engageChevron()
 	{
 		level.playSound((Player)null, worldPosition, chevronEngageSound(), SoundSource.BLOCKS, 0.25F, 1F);
 	}

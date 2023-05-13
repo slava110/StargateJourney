@@ -11,16 +11,16 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.povstalec.sgjourney.StargateJourney;
-import net.povstalec.sgjourney.common.items.FalconArmorItem;
-import net.povstalec.sgjourney.common.items.JackalArmorItem;
 import net.povstalec.sgjourney.common.items.KaraKeshItem;
 import net.povstalec.sgjourney.common.items.NaquadahBottleItem;
 import net.povstalec.sgjourney.common.items.PDAItem;
-import net.povstalec.sgjourney.common.items.PersonalShieldItem;
 import net.povstalec.sgjourney.common.items.RingRemoteItem;
 import net.povstalec.sgjourney.common.items.StaffWeaponItem;
 import net.povstalec.sgjourney.common.items.SyringeItem;
 import net.povstalec.sgjourney.common.items.ZeroPointModule;
+import net.povstalec.sgjourney.common.items.armor.FalconArmorItem;
+import net.povstalec.sgjourney.common.items.armor.JackalArmorItem;
+import net.povstalec.sgjourney.common.items.armor.PersonalShieldItem;
 import net.povstalec.sgjourney.common.items.crystals.CommunicationCrystalItem;
 import net.povstalec.sgjourney.common.items.crystals.ControlCrystalItem;
 import net.povstalec.sgjourney.common.items.crystals.EnergyCrystalItem;
@@ -140,7 +140,7 @@ public class ItemInit
 			() -> new FalconArmorItem(ArmorMaterialInit.jaffa, EquipmentSlot.HEAD, new Item.Properties().fireResistant()));
 	
 	public static final RegistryObject<PersonalShieldItem> PERSONAL_SHIELD_EMITTER = ITEMS.register("personal_shield_emitter", 
-			() -> new PersonalShieldItem(ArmorMaterialInit.personal_shield, EquipmentSlot.CHEST, new Item.Properties().stacksTo(1).fireResistant()));
+			() -> new PersonalShieldItem(ArmorMaterialInit.personal_shield, EquipmentSlot.CHEST, new Item.Properties().rarity(Rarity.RARE).stacksTo(1).fireResistant()));
 		
 	
 	public static void register(IEventBus eventBus)

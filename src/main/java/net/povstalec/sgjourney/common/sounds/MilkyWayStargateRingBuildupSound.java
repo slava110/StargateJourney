@@ -6,19 +6,24 @@ import net.minecraft.sounds.SoundSource;
 import net.povstalec.sgjourney.common.block_entities.stargate.MilkyWayStargateEntity;
 import net.povstalec.sgjourney.common.init.SoundInit;
 
-public class MilkyWayStargateRingSound extends AbstractTickableSoundInstance
+public class MilkyWayStargateRingBuildupSound extends AbstractTickableSoundInstance
 {
 	private static final float VOLUME_MIN = 0.0F;
 	private static final float VOLUME_MAX = 0.5F;
 	
 	MilkyWayStargateEntity stargate;
 	
-	public MilkyWayStargateRingSound(MilkyWayStargateEntity stargate)
+	public MilkyWayStargateRingBuildupSound(MilkyWayStargateEntity stargate)
 	{
-		super(SoundInit.MILKY_WAY_RING_SPIN.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
+		super(SoundInit.MILKY_WAY_RING_SPIN_START.get(), SoundSource.BLOCKS, SoundInstance.createUnseededRandom());
 		this.stargate = stargate;
-        this.looping = true;
         this.volume = VOLUME_MIN;
+	}
+	
+	@Override
+	public boolean isLooping()
+	{
+		return false;
 	}
 
 	@Override
@@ -39,13 +44,18 @@ public class MilkyWayStargateRingSound extends AbstractTickableSoundInstance
 	private void fadeIn()
 	{
 		if(this.volume < VOLUME_MAX)
-			this.volume += 0.05F;
+			this.volume += 0.1F;
 	}
 	
 	private void fadeOut()
 	{
 		if(this.volume > VOLUME_MIN)
-			this.volume -= 0.05F;
+			this.volume -= 0.1F;
+	}
+	
+	public void stopSound()
+	{
+		this.stop();
 	}
 	
 }

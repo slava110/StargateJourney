@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.Maps;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -23,6 +24,8 @@ import net.povstalec.sgjourney.common.init.BlockEntityInit;
 import net.povstalec.sgjourney.common.init.PacketHandlerInit;
 import net.povstalec.sgjourney.common.init.SoundInit;
 import net.povstalec.sgjourney.common.packets.ClientboundMilkyWayStargateUpdatePacket;
+import net.povstalec.sgjourney.common.sounds.MilkyWayStargateRingBuildupSound;
+import net.povstalec.sgjourney.common.sounds.MilkyWayStargateRingSound;
 import net.povstalec.sgjourney.common.stargate.Addressing;
 import net.povstalec.sgjourney.common.stargate.Stargate;
 import net.povstalec.sgjourney.common.stargate.StargatePart;
@@ -39,6 +42,9 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 	public boolean computerRotation = false;
 	public int desiredSymbol = 0;
 	public boolean rotateClockwise = true;
+	
+	private MilkyWayStargateRingSound spinSound;
+	private MilkyWayStargateRingBuildupSound buildupSound;
 
 	public MilkyWayStargateEntity(BlockPos pos, BlockState state)
 	{
@@ -214,6 +220,14 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 	public static void tick(Level level, BlockPos pos, BlockState state, MilkyWayStargateEntity stargate)
 	{
 		stargate.rotate();
+		if(stargate.isRotating() && level.isClientSide())
+		{
+			if(stargate.spinSound == null)
+			{
+				stargate.spinSound = new MilkyWayStargateRingSound(stargate);
+		        Minecraft.getInstance().getSoundManager().play(stargate.spinSound);
+			}
+		}
 		
 		AbstractStargateEntity.tick(level, pos, state, (AbstractStargateEntity) stargate);
 	}
@@ -297,6 +311,7 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 		this.computerRotation = true;
 		this.desiredSymbol = desiredSymbol;
 		this.rotateClockwise = rotateClockwise;
+		this.playBuildupSound();
 		
 		synchronizeWithClient(this.level);
 	}
@@ -306,5 +321,13 @@ public class MilkyWayStargateEntity extends AbstractStargateEntity
 		this.computerRotation = false;
 		
 		synchronizeWithClient(this.level);
+	}
+	
+	public void playBuildupSound()
+	{
+		if(this.buildupSound != null)
+			this.buildupSound.stopSound();
+		this.buildupSound = new MilkyWayStargateRingBuildupSound(this);
+        Minecraft.getInstance().getSoundManager().play(buildupSound);
 	}
 }
