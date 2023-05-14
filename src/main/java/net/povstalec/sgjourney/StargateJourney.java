@@ -28,14 +28,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DataPackRegistryEvent;
 import net.povstalec.sgjourney.client.Layers;
-import net.povstalec.sgjourney.client.render.ClassicStargateRenderer;
-import net.povstalec.sgjourney.client.render.MilkyWayStargateRenderer;
-import net.povstalec.sgjourney.client.render.PegasusStargateRenderer;
-import net.povstalec.sgjourney.client.render.PlasmaProjectileRenderer;
-import net.povstalec.sgjourney.client.render.SandstoneSymbolRenderer;
-import net.povstalec.sgjourney.client.render.StoneSymbolRenderer;
-import net.povstalec.sgjourney.client.render.TransportRingsRenderer;
-import net.povstalec.sgjourney.client.render.UniverseStargateRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.ClassicStargateRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.MilkyWayStargateRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.PegasusStargateRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.SandstoneSymbolRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.StoneSymbolRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.TransportRingsRenderer;
+import net.povstalec.sgjourney.client.render.block_entity.UniverseStargateRenderer;
+import net.povstalec.sgjourney.client.render.entity.GoauldRenderer;
+import net.povstalec.sgjourney.client.render.entity.PlasmaProjectileRenderer;
 import net.povstalec.sgjourney.client.screens.BasicInterfaceScreen;
 import net.povstalec.sgjourney.client.screens.ClassicDHDScreen;
 import net.povstalec.sgjourney.client.screens.CrystalInterfaceScreen;
@@ -167,6 +168,8 @@ public class StargateJourney
         	MenuScreens.register(MenuInit.ZPM_HUB.get(), ZPMHubScreen::new);
         	
         	EntityRenderers.register(EntityInit.JAFFA_PLASMA.get(), PlasmaProjectileRenderer::new);
+        	
+        	EntityRenderers.register(EntityInit.GOAULD.get(), GoauldRenderer::new);
         	
         	BlockEntityRenderers.register(BlockEntityInit.SANDSTONE_SYMBOL.get(), SandstoneSymbolRenderer::new);
         	BlockEntityRenderers.register(BlockEntityInit.STONE_SYMBOL.get(), StoneSymbolRenderer::new);

@@ -1,4 +1,4 @@
-package net.povstalec.sgjourney.client.render;
+package net.povstalec.sgjourney.client.render.block_entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 

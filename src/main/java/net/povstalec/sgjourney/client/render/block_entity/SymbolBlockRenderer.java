@@ -1,4 +1,4 @@
-package net.povstalec.sgjourney.client.render;
+package net.povstalec.sgjourney.client.render.block_entity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;

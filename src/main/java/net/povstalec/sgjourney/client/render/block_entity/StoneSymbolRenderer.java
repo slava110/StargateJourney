@@ -1,4 +1,4 @@
-package net.povstalec.sgjourney.client.render;
+package net.povstalec.sgjourney.client.render.block_entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -9,19 +9,19 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.povstalec.sgjourney.StargateJourney;
-import net.povstalec.sgjourney.common.block_entities.symbols.SandstoneSymbolBlockEntity;
+import net.povstalec.sgjourney.common.block_entities.symbols.StoneSymbolBlockEntity;
 
-public class SandstoneSymbolRenderer extends SymbolBlockRenderer implements BlockEntityRenderer<SandstoneSymbolBlockEntity>
+public class StoneSymbolRenderer extends SymbolBlockRenderer implements BlockEntityRenderer<StoneSymbolBlockEntity>
 {
 	private static final ResourceLocation ERROR = new ResourceLocation(StargateJourney.MODID, "textures/symbols/error.png");
 	
-	public SandstoneSymbolRenderer(Context context)
+	public StoneSymbolRenderer(Context context)
 	{
 		super(context);
 	}
 
 	@Override
-	public void render(SandstoneSymbolBlockEntity symbol, float partialTick, PoseStack stack, MultiBufferSource source, int combinedLight, int combinedOverlay)
+	public void render(StoneSymbolBlockEntity symbol, float partialTick, PoseStack stack, MultiBufferSource source, int combinedLight, int combinedOverlay)
 	{
 		stack.translate(0.5D, 0.5D, 0.5D);
 		
@@ -36,7 +36,7 @@ public class SandstoneSymbolRenderer extends SymbolBlockRenderer implements Bloc
 		else
 			symbol_texture = source.getBuffer(RenderType.entityNoOutline(ERROR));
 		
-		symbol_part.render(stack, symbol_texture, combinedLight, combinedOverlay, 198.0F/255.0F, 174.0F/255.0F, 113.0F/255.0F, 1.0F);
+		symbol_part.render(stack, symbol_texture, combinedLight, combinedOverlay, 90.0F/255.0F, 89.0F/255.0F, 90.0F/255.0F, 1.0F);
 	}
 	
 }

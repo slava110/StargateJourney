@@ -1,4 +1,4 @@
-package net.povstalec.sgjourney.client.render;
+package net.povstalec.sgjourney.client.render.entity;
 
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;

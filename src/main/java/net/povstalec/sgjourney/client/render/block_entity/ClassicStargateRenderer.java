@@ -1,4 +1,4 @@
-package net.povstalec.sgjourney.client.render;
+package net.povstalec.sgjourney.client.render.block_entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -11,41 +11,40 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.povstalec.sgjourney.client.Layers;
+import net.povstalec.sgjourney.client.models.ClassicStargateModel;
 import net.povstalec.sgjourney.client.models.WormholeModel;
-import net.povstalec.sgjourney.common.block_entities.stargate.PegasusStargateEntity;
+import net.povstalec.sgjourney.common.block_entities.stargate.ClassicStargateEntity;
 import net.povstalec.sgjourney.common.blocks.stargate.AbstractStargateBaseBlock;
-import net.povstalec.sgjourney.common.blocks.stargate.PegasusStargateBlock;
+import net.povstalec.sgjourney.common.blocks.stargate.ClassicStargateBlock;
 import net.povstalec.sgjourney.common.config.ClientStargateConfig;
 import net.povstalec.sgjourney.common.misc.Orientation;
-import net.povstalec.sgjourney.client.models.PegasusStargateModel;
 
 @OnlyIn(Dist.CLIENT)
-public class PegasusStargateRenderer extends AbstractStargateRenderer implements BlockEntityRenderer<PegasusStargateEntity>
+public class ClassicStargateRenderer extends AbstractStargateRenderer implements BlockEntityRenderer<ClassicStargateEntity>
 {
-	protected static final int r = ClientStargateConfig.pegasus_rgba.getRed();
-	protected static final int g = ClientStargateConfig.pegasus_rgba.getGreen();
-	protected static final int b = ClientStargateConfig.pegasus_rgba.getBlue();
+	protected static final int r = ClientStargateConfig.classic_rgba.getRed();
+	protected static final int g = ClientStargateConfig.classic_rgba.getGreen();
+	protected static final int b = ClientStargateConfig.classic_rgba.getBlue();
 	
 	protected final WormholeModel wormholeModel;
-	protected final PegasusStargateModel stargateModel;
+	protected final ClassicStargateModel stargateModel;
 	
-	public PegasusStargateRenderer(BlockEntityRendererProvider.Context context)
+	public ClassicStargateRenderer(BlockEntityRendererProvider.Context context)
 	{
 		super(context);
 		this.wormholeModel = new WormholeModel(context.bakeLayer(Layers.EVENT_HORIZON_LAYER), r, g, b);
-		this.stargateModel = new PegasusStargateModel(
-				context.bakeLayer(Layers.PEGASUS_RING_LAYER), 
-				context.bakeLayer(Layers.PEGASUS_SYMBOL_RING_LAYER), 
-				context.bakeLayer(Layers.PEGASUS_DIVIDER_LAYER), 
-				context.bakeLayer(Layers.PEGASUS_CHEVRON_LAYER));
+		this.stargateModel = new ClassicStargateModel(
+				context.bakeLayer(Layers.CLASSIC_OUTER_RING_LAYER), 
+				context.bakeLayer(Layers.CLASSIC_INNER_RING_LAYER), 
+				context.bakeLayer(Layers.CLASSIC_CHEVRON_LAYER));
 	}
 	
 	@Override
-	public void render(PegasusStargateEntity stargate, float partialTick, PoseStack stack,
+	public void render(ClassicStargateEntity stargate, float partialTick, PoseStack stack,
 			MultiBufferSource source, int combinedLight, int combinedOverlay)
 	{
 		BlockState blockstate = stargate.getBlockState();
-		float facing = blockstate.getValue(PegasusStargateBlock.FACING).toYRot();
+		float facing = blockstate.getValue(ClassicStargateBlock.FACING).toYRot();
 		Vec3 center = stargate.getRelativeCenter();
 		Orientation orientation = blockstate.getValue(AbstractStargateBaseBlock.ORIENTATION);
 		
@@ -57,14 +56,15 @@ public class PegasusStargateRenderer extends AbstractStargateRenderer implements
             stack.mulPose(Axis.XP.rotationDegrees(-90));
         else if(orientation == Orientation.DOWNWARD)
             stack.mulPose(Axis.XP.rotationDegrees(90));
-        
-        this.stargateModel.setCurrentSymbol(stargate.currentSymbol);
-        this.stargateModel.renderStargate(stargate, partialTick, stack, source, combinedLight, combinedOverlay);
 		
-        if(stargate.isConnected())
+        this.stargateModel.setRotation(stargate.getRotation(partialTick));
+		this.stargateModel.renderStargate(stargate, partialTick, stack, source, combinedLight, combinedOverlay);
+		
+		if(stargate.isConnected())
 	    	this.wormholeModel.renderEventHorizon(stack, source, combinedLight, combinedOverlay, stargate.getTickCount());
-		
+	    
 	    stack.popPose();
+	    
 	}
 	
 	@Override
