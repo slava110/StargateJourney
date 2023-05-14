@@ -198,8 +198,15 @@ public class MilkyWayStargateModel extends AbstractStargateModel
 					this.getChevronLight(i).y = 0;
 				}
 			}
+			else
+			{
+				for(int i = 1; i < 9; i++)
+				{
+					this.getChevronLight(i).y = 0;
+					this.getOuterChevron(i).y = 0;
+				}
+			}
 		}
-			
 		else
 		{
 			for(int i = 1; i < 9; i++)

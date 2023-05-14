@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.povstalec.sgjourney.common.block_entities.stargate.MilkyWayStargateEntity;
+import net.povstalec.sgjourney.common.config.ClientStargateConfig;
 import net.povstalec.sgjourney.common.init.BlockEntityInit;
 import net.povstalec.sgjourney.common.init.BlockInit;
 import net.povstalec.sgjourney.common.stargate.PointOfOrigin;
@@ -107,7 +108,7 @@ public class MilkyWayStargateBlock extends AbstractStargateBaseBlock
 			if(location.toString().equals("sgjourney:empty"))
 				symbols = "Empty";
 			else if(symbolsRegistry.containsKey(location))
-				symbols = symbolsRegistry.get(location).getName();
+				symbols = symbolsRegistry.get(location).getName(!ClientStargateConfig.unique_symbols.get());
 			else
 				symbols = "Error";
 		}

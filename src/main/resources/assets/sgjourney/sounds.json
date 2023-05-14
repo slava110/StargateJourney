@@ -4,7 +4,10 @@
 		"subtitle": "sounds.sgjourney.universe_ring_spin",
 		"sounds":
 		[
-			"sgjourney:universe_ring_spin"
+			{
+				"name": "sgjourney:universe_ring_spin",
+				"stream": false
+			}
 		]
 	},
 	"universe_chevron_engage":

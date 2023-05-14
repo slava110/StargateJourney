@@ -68,6 +68,7 @@ import net.povstalec.sgjourney.common.stargate.AddressTable;
 import net.povstalec.sgjourney.common.stargate.Galaxy;
 import net.povstalec.sgjourney.common.stargate.PointOfOrigin;
 import net.povstalec.sgjourney.common.stargate.SolarSystem;
+import net.povstalec.sgjourney.common.stargate.SymbolSet;
 import net.povstalec.sgjourney.common.stargate.Symbols;
 import net.povstalec.sgjourney.common.world.biomemod.BiomeModifiers;
 
@@ -100,6 +101,7 @@ public class StargateJourney
         
         eventBus.addListener((DataPackRegistryEvent.NewRegistry event) -> 
         {
+            event.dataPackRegistry(SymbolSet.REGISTRY_KEY, SymbolSet.CODEC, SymbolSet.CODEC);
             event.dataPackRegistry(Symbols.REGISTRY_KEY, Symbols.CODEC, Symbols.CODEC);
             event.dataPackRegistry(PointOfOrigin.REGISTRY_KEY, PointOfOrigin.CODEC, PointOfOrigin.CODEC);
             event.dataPackRegistry(SolarSystem.REGISTRY_KEY, SolarSystem.CODEC, SolarSystem.CODEC);

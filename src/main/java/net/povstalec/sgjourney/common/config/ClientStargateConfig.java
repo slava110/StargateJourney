@@ -4,6 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ClientStargateConfig
 {
+	public static SGJourneyConfigValue.BooleanValue unique_symbols;
 	public static SGJourneyConfigValue.BooleanValue use_movie_stargate_model;
 	public static SGJourneyConfigValue.BooleanValue milky_way_stargate_back_lights_up;
 	public static SGJourneyConfigValue.BooleanValue pegasus_stargate_back_lights_up;
@@ -16,6 +17,10 @@ public class ClientStargateConfig
 	public static void init(ForgeConfigSpec.Builder client)
 	{
 		client.comment("Stargate Journey Client Stargate Config");
+		
+		unique_symbols = new SGJourneyConfigValue.BooleanValue(client, "client.unique_symbols", 
+				false, 
+				"If true Solar Systems will use unique Symbols");
 		
 		use_movie_stargate_model = new SGJourneyConfigValue.BooleanValue(client, "client.use_movie_stargate_model", 
 				false, 

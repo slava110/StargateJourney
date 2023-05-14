@@ -141,11 +141,19 @@
 	"solar_system.sgjourney.end": "End",
 	"solar_system.sgjourney.chulak": "Chulak",
 	"solar_system.sgjourney.lantea": "Lantea",
-	"solar_system.ad_astra.lantea": "Glacio",
+	"solar_system.sgjourney.proxima_centauri": "Proxima Centauri",
 	
-	"symbols.sgjourney.milky_way": "Milky Way",
-	"symbols.sgjourney.pegasus": "Pegasus",
-	"symbols.sgjourney.universal": "Universal",
+	"symbol_set.sgjourney.milky_way": "Milky Way",
+	"symbol_set.sgjourney.kaliem": "Kaliem",
+	"symbol_set.sgjourney.pegasus": "Pegasus",
+	"symbol_set.sgjourney.universal": "Universal",
+	
+	"symbols.sgjourney.terra": "Terra",
+	"symbols.sgjourney.abydos": "Abydos",
+	"symbols.sgjourney.chulak": "Chulak",
+	"symbols.sgjourney.lantea": "Lantea",
+	"symbols.sgjourney.nether": "Nether",
+	"symbols.sgjourney.end": "End",
 	
 	"point_of_origin.sgjourney.terra": "Terra",
 	"point_of_origin.sgjourney.tauri": "Tau'ri",
@@ -153,6 +161,7 @@
 	"point_of_origin.sgjourney.abydos": "Abydos",
 	"point_of_origin.sgjourney.kaliem": "Kaliem",
 	"point_of_origin.sgjourney.subido": "Subido",
+	"point_of_origin.sgjourney.centauri": "Centauri",
 	"point_of_origin.sgjourney.destiny": "Destiny",
 	"point_of_origin.sgjourney.universal": "Universal",
 	"point_of_origin.sgjourney.eye_of_ra": "Eye of Ra",
@@ -233,6 +242,7 @@
 	"gui.sgjourney.config_stargate": "Stargate",
 	
 	"gui.sgjourney.disable_smooth_animations": "Disable Smooth Animations",
+	"gui.sgjourney.unique_symbols": "Unique Symbols",
 	"gui.sgjourney.use_movie_stargate_model": "Use Movie Stargate Model",
 	"gui.sgjourney.milky_way_stargate_back_lights_up": "Milky Way Stargate Back",
 	"gui.sgjourney.pegasus_stargate_back_lights_up": "Pegasus Stargate Back"
