@@ -146,20 +146,20 @@ public class StargateNetwork extends SavedData
 			int[] coordinates = stargates.getCompound(stargateID).getIntArray(COORDINATES);
 			
 			BlockPos pos = new BlockPos(coordinates[0], coordinates[1], coordinates[2]);
-			
+
 			ServerLevel level = server.getLevel(dimension);
-			
+
 			if(level!= null)
 			{
 				BlockEntity blockentity = server.getLevel(dimension).getBlockEntity(pos);
-				
+
 				if(blockentity instanceof AbstractStargateEntity stargate)
 				{
 					if(!stargateID.equals(stargate.getID()))
 						removeStargate(server.getLevel(dimension), stargateID);
-					
+
 					stargate.resetStargate(Stargate.Feedback.CONNECTION_ENDED_BY_NETWORK, updateInterfaces);
-					
+
 					if(!getStargates().contains(stargateID))
 					{
 						addStargate(server, stargateID, BlockEntityList.get(server).getBlockEntities(SGJourneyBlockEntity.Type.STARGATE.id).getCompound(stargateID), stargate.getGeneration().getGen());
@@ -339,16 +339,20 @@ public class StargateNetwork extends SavedData
 			return connections.get(uuid).getTimeSinceLastTraveler();
 		return 0;
 	}
-	
+
+	public Map<String, Connection> getConnections() {
+		return connections;
+	}
+
 	public Stargate.Feedback createConnection(MinecraftServer server, AbstractStargateEntity dialingStargate, AbstractStargateEntity dialedStargate, Address.Type addressType, boolean doKawoosh)
 	{
 		Connection.Type connectionType = Connection.getType(server, dialingStargate, dialedStargate);
-		
+
 		if(!CommonStargateConfig.allow_interstellar_8_chevron_addresses.get() &&
 				addressType == Address.Type.ADDRESS_8_CHEVRON &&
 				connectionType == Connection.Type.INTERSTELLAR)
 			return dialingStargate.resetStargate(Stargate.Feedback.INVALID_8_CHEVRON_ADDRESS, true);
-		
+
 		if(!CommonStargateConfig.allow_system_wide_connections.get() && connectionType == Connection.Type.SYSTEM_WIDE)
 			return dialingStargate.resetStargate(Stargate.Feedback.INVALID_SYSTEM_WIDE_CONNECTION, true);
 		
@@ -416,7 +420,7 @@ public class StargateNetwork extends SavedData
 			StargateJourney.LOGGER.info("Could not find connection " + uuid);
 		this.setDirty();
 	}*/
-	
+
 	//============================================================================================
 	//*************************************Saving and Loading*************************************
 	//============================================================================================

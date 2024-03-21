@@ -189,7 +189,7 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
 			}
 		}
 	}
-	
+
 	public static void destroyStargate(Level level, BlockPos pos, ArrayList<StargatePart> parts, Direction direction, Orientation orientation)
 	{
 		if(direction == null)
@@ -197,27 +197,44 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
 			StargateJourney.LOGGER.error("Failed to destroy Stargate because direction is null");
 			return;
 		}
-		
+
 		if(orientation == null)
 		{
 			StargateJourney.LOGGER.error("Failed to destroy Stargate because orientation is null");
 			return;
 		}
-		
+
 		for(StargatePart part : parts)
 		{
 			BlockPos ringPos = part.getRingPos(pos, direction, orientation);
 			BlockState state = level.getBlockState(ringPos);
-			
+
 			if(state.getBlock() instanceof AbstractStargateBlock)
 			{
 				boolean waterlogged = state.getBlock() instanceof AbstractStargateRingBlock ? state.getValue(AbstractStargateRingBlock.WATERLOGGED) : false;
-				
+
 				level.setBlock(ringPos, waterlogged ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
 			}
 		}
 	}
-	
+
+
+	@Override
+	public void onPlace(BlockState newState, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+		if(oldState.getBlock() != newState.getBlock()) {
+			if(movedByPiston) {
+				BlockEntity be = level.getBlockEntity(pos);
+
+				if(be instanceof AbstractStargateEntity stargate) {
+					StargateJourney.LOGGER.info("onPlace stargate!");
+					stargate.addToBlockEntityList();
+				}
+			}
+
+
+		}
+	}
+
 	@Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving)
 	{
@@ -226,7 +243,7 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
     		BlockEntity blockentity = level.getBlockEntity(pos);
     		if(blockentity instanceof AbstractStargateEntity stargate)
     		{
-    			stargate.bypassDisconnectStargate(Stargate.Feedback.STARGATE_DESTROYED);
+    			stargate.bypassDisconnectStargate(Stargate.Feedback.STARGATE_DESTROYED);//TODO change reason for move
     			stargate.unsetDHD(true);
     			stargate.removeFromBlockEntityList();
     		}
@@ -237,17 +254,18 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
     			{
     				BlockPos ringPos = part.getRingPos(pos, oldState.getValue(FACING), oldState.getValue(ORIENTATION));
         			BlockState state = level.getBlockState(ringPos);
-        			
+
         			if(state.getBlock() instanceof AbstractStargateBlock)
         			{
         				boolean waterlogged = state.getBlock() instanceof AbstractStargateRingBlock ? state.getValue(AbstractStargateRingBlock.WATERLOGGED) : false;
-        				
+
         				level.setBlock(ringPos, waterlogged ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
         			}
     			}
     		}*/
-    		destroyStargate(level, pos, getParts(), oldState.getValue(FACING), oldState.getValue(ORIENTATION));
-    		
+            if(!isMoving)
+    		    destroyStargate(level, pos, getParts(), oldState.getValue(FACING), oldState.getValue(ORIENTATION));
+
             super.onRemove(oldState, level, pos, newState, isMoving);
         }
     }

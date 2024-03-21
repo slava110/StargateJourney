@@ -60,10 +60,12 @@ public abstract class AbstractStargateRingBlock extends AbstractStargateBlock
 	{
 		if(oldState.getBlock() != newState.getBlock())
 		{
-			BlockPos baseBlockPos = oldState.getValue(PART).getBaseBlockPos(pos, oldState.getValue(FACING), oldState.getValue(ORIENTATION));
-			
-			AbstractStargateBaseBlock.destroyStargate(level, baseBlockPos, getParts(), oldState.getValue(FACING), oldState.getValue(ORIENTATION));
-			//level.setBlock(baseBlockPos, isWaterLogged(baseState, level, baseBlockPos) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 35);
+			if(!isMoving) {
+                BlockPos baseBlockPos = oldState.getValue(PART).getBaseBlockPos(pos, oldState.getValue(FACING), oldState.getValue(ORIENTATION));
+
+                AbstractStargateBaseBlock.destroyStargate(level, baseBlockPos, getParts(), oldState.getValue(FACING), oldState.getValue(ORIENTATION));
+                //level.setBlock(baseBlockPos, isWaterLogged(baseState, level, baseBlockPos) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 35);
+            }
 			
 	        super.onRemove(oldState, level, pos, newState, isMoving);
 		}

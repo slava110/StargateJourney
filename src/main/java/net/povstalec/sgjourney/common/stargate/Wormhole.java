@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -78,7 +79,10 @@ public class Wormhole implements ITeleporter
 		Direction direction = initialStargate.getDirection();
 		Direction orientationDirection = Orientation.getEffectiveDirection(direction, initialStargate.getOrientation());
 		Map<Integer, Vec3> entityLocations = new HashMap<Integer, Vec3>();
-		localEntities.stream().forEach((traveler) ->
+		// TODO remove check here
+		localEntities.stream()
+				.filter(ent -> !EntityType.getKey(ent.getType()).getNamespace().equals(StargateJourney.CREATE_MODID) && !(ent.getVehicle() instanceof CarriageContraptionEntity))
+				.forEach((traveler) ->
 		{
 			if(this.entityLocations.containsKey(traveler.getId()))
 			{
