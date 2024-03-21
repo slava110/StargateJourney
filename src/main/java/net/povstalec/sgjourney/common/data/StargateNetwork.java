@@ -331,7 +331,11 @@ public class StargateNetwork extends SavedData
 			return connections.get(uuid).getTimeSinceLastTraveler();
 		return 0;
 	}
-	
+
+	public Map<String, Connection> getConnections() {
+		return connections;
+	}
+
 	public Stargate.Feedback createConnection(MinecraftServer server, AbstractStargateEntity dialingStargate, AbstractStargateEntity dialedStargate, boolean doKawoosh)
 	{
 		Connection.ConnectionType connectionType = getConnectionType(server, dialingStargate, dialedStargate);

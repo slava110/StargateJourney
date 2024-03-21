@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.povstalec.sgjourney.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixins.sgjourney.refmap.json",
+  "mixins": [
+    "create.MixinTrackBlock"
+  ],
+  "client": [
+  ],
+  "plugin": "net.povstalec.sgjourney.mixin.plugin.MixinPlugin",
+  "minVersion": "0.8"
+}

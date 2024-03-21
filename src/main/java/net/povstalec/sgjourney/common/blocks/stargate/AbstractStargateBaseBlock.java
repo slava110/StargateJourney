@@ -188,7 +188,23 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
 			}
 		}
 	}
-	
+
+	@Override
+	public void onPlace(BlockState newState, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+		if(oldState.getBlock() != newState.getBlock()) {
+			if(movedByPiston) {
+				BlockEntity be = level.getBlockEntity(pos);
+
+				if(be instanceof AbstractStargateEntity stargate) {
+					StargateJourney.LOGGER.info("onPlace stargate!");
+					stargate.addToBlockEntityList();
+				}
+			}
+
+
+		}
+	}
+
 	@Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving)
 	{
@@ -197,25 +213,27 @@ public abstract class AbstractStargateBaseBlock extends AbstractStargateBlock im
     		BlockEntity blockentity = level.getBlockEntity(pos);
     		if(blockentity instanceof AbstractStargateEntity stargate)
     		{
-    			stargate.bypassDisconnectStargate(Stargate.Feedback.STARGATE_DESTROYED);
+				stargate.bypassDisconnectStargate(Stargate.Feedback.STARGATE_DESTROYED); //TODO change reason for move
     			stargate.removeFromBlockEntityList();
     		}
-    		
-    		for(StargatePart part : getParts())
-    		{
-    			if(!part.equals(StargatePart.BASE))
-    			{
-    				BlockPos ringPos = part.getRingPos(pos, oldState.getValue(FACING), oldState.getValue(ORIENTATION));
-        			BlockState state = level.getBlockState(ringPos);
-        			
-        			if(state.getBlock() instanceof AbstractStargateBlock)
-        			{
-        				boolean waterlogged = state.getBlock() instanceof AbstractStargateRingBlock ? state.getValue(AbstractStargateRingBlock.WATERLOGGED) : false;
-        				
-        				level.setBlock(ringPos, waterlogged ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
-        			}
-    			}
-    		}
+
+			if(!isMoving) {
+				for(StargatePart part : getParts())
+				{
+					if(!part.equals(StargatePart.BASE))
+					{
+						BlockPos ringPos = part.getRingPos(pos, oldState.getValue(FACING), oldState.getValue(ORIENTATION));
+						BlockState state = level.getBlockState(ringPos);
+
+						if(state.getBlock() instanceof AbstractStargateBlock)
+						{
+							boolean waterlogged = state.getBlock() instanceof AbstractStargateRingBlock ? state.getValue(AbstractStargateRingBlock.WATERLOGGED) : false;
+
+							level.setBlock(ringPos, waterlogged ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 3);
+						}
+					}
+				}
+			}
             super.onRemove(oldState, level, pos, newState, isMoving);
         }
     }

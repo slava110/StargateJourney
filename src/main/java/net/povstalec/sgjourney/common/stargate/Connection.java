@@ -354,7 +354,15 @@ public class Connection
 	{
 		return this.timeSinceLastTraveler;
 	}
-	
+
+	public AbstractStargateEntity getDialingStargate() {
+		return dialingStargate;
+	}
+
+	public AbstractStargateEntity getDialedStargate() {
+		return dialedStargate;
+	}
+
 	public boolean doKawoosh()
 	{
 		return this.doKawoosh;

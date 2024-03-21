@@ -31,6 +31,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DataPackRegistryEvent;
 import net.povstalec.sgjourney.client.Layers;
+import net.povstalec.sgjourney.common.compatibility.create.CreateCompatibility;
 import net.povstalec.sgjourney.client.render.block_entity.CartoucheRenderer;
 import net.povstalec.sgjourney.client.render.block_entity.ClassicStargateRenderer;
 import net.povstalec.sgjourney.client.render.block_entity.MilkyWayStargateRenderer;
@@ -130,6 +131,9 @@ public class StargateJourney
         eventBus.addListener(this::commonSetup);
         eventBus.addListener(Layers::registerLayers);
         eventBus.addListener(TabInit::addCreative);
+
+        if(ModList.get().isLoaded("create"))
+            CreateCompatibility.registerStargateBehaviour();
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StargateJourneyConfig.CLIENT_CONFIG, "sgjourney-client.toml");
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StargateJourneyConfig.COMMON_CONFIG, "sgjourney-common.toml");
