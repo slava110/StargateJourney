@@ -53,26 +53,33 @@ abstract class MixinTrackBlock {
             if(be instanceof AbstractStargateEntity sg && sg.isConnected()) {
                 AbstractStargateEntity dialed = null;
 
-                //TODO check if same dimension? Unless Create checks
                 for(Connection con : StargateNetwork.get(level).getConnections().values()) {
                     if(con.getDialingStargate() == be) {
                         dialed = con.getDialedStargate();
-                        StargateJourney.LOGGER.info("Dialed!");
                         break;
                     } else if(con.getDialedStargate() == be) {
                         dialed = con.getDialingStargate();
-                        StargateJourney.LOGGER.info("Dialing!");
                         break;
                     }
                 }
 
-                // TODO fuck what if vertical stargate I need to do something
-                // It's just placing track above the gate so it's kinda weird xD
-                if(dialed != null)
-                    return Pair.of((ServerLevel) dialed.getLevel(), new BlockFace(dialed.getBlockPos().above().relative(dialed.getDirection()), dialed.getDirection().getOpposite()));
+                if(dialed != null
+                        && sg.getDirection().getAxis().isHorizontal()
+                        && dialed.getDirection().getAxis().isHorizontal()
+                ) {
+                    return Pair.of(
+                            (ServerLevel) dialed.getLevel(),
+                            new BlockFace(
+                                    dialed.getBlockPos()
+                                            .above()
+                                            .relative(dialed.getDirection()),
+                                    dialed.getDirection().getOpposite()
+                            )
+                    );
+                }
             }
         }
-        return null;
+        return original;
     }
 
 
