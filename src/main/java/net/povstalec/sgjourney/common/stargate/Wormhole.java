@@ -81,7 +81,7 @@ public class Wormhole implements ITeleporter
 		Map<Integer, Vec3> entityLocations = new HashMap<Integer, Vec3>();
 		// TODO remove check here
 		localEntities.stream()
-				.filter(ent -> !EntityType.getKey(ent.getType()).getNamespace().equals(StargateJourney.CREATE_MODID) && !(ent.getVehicle() instanceof CarriageContraptionEntity))
+				.filter(ent -> !EntityType.getKey(ent.getType()).getNamespace().equals("create") && !(ent.getVehicle() instanceof CarriageContraptionEntity))
 				.forEach((traveler) ->
 		{
 			if(this.entityLocations.containsKey(traveler.getId()))
