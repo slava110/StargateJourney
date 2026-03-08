@@ -219,25 +219,13 @@ public abstract class Address implements Cloneable
 			return true;
 		else if(object instanceof Address address)
 		{
-			for(int i = 0; i < this.getLength(); i++)
-			{
-				if(this.symbolAt(i) != address.symbolAt(i))
-					return false;
-			}
-			
-			return true;
+			return Arrays.equals(addressArray, address.addressArray);
 		}
 		else if(object instanceof AddressFilterInfo.HiddenAddress hiddenAddress)
 			return equals(hiddenAddress.address());
 		else if(object instanceof int[] array)
 		{
-			for(int i = 0; i < array.length; i++)
-			{
-				if(array[i] != this.symbolAt(i))
-					return false;
-			}
-			
-			return true;
+			return Arrays.equals(addressArray, array);
 		}
 		
 		return false;
@@ -246,7 +234,7 @@ public abstract class Address implements Cloneable
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(symbolAt(0), symbolAt(1), symbolAt(2), symbolAt(3), symbolAt(4), symbolAt(5), symbolAt(6), symbolAt(7), symbolAt(8));
+		return Arrays.hashCode(addressArray);
 	}
 	
 	// Static functions
